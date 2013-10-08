@@ -1,9 +1,14 @@
 <?php
-		if(isset($_POST['article'])){
-		//parse the input
+		if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['description'])){
+			$articleName = htmlentities($_POST['articleName']);	//sanatize all the things
+			$description = htmlentities($_POST['description']);
 			$input = htmlentities($_POST['article']);
+			$url = "";
+			$imgUrl = "";
+			$len = strlen($input);
 			$article = "<div id=\"article\">";
-			for($i = 0; $i < strlen($input); $i++){
+			
+			for($i = 0; $i < strlen($input); $i++){	//parse the input
 				if($input[$i] == "\n"){
 					$article .= "<br />";
 				}else if($input[$i] == "\t"){
@@ -40,6 +45,16 @@
 						case substr($tag, 0, 3) == "img":
 							$article .= "<img src=\"";	
 							$i += 4;
+							$pos = $i+1;
+							$imgUrl = "";	//get the url
+							while($input[$pos] != "[" && $pos < $len){
+								$imgUrl .= $input[$pos];
+								$pos++;
+							}
+							//help prevent csrf
+							if( substr($imgUrl, -4) != ".png" && substr($imgUrl, -4) != ".jpg" && substr($imgUrl, -5) != ".jpeg" && substr($imgUrl, -4) != ".png"){
+								$i += strlen($imgUrl);
+							}
 							break;
 						case substr($tag, 0, 4) == "/img":
 							$article .= "\"/>";
@@ -80,9 +95,15 @@
 						case substr($tag, 0, 1) == "a":
 							$article .= "<a href=\"";	
 							$i += 2;
+							$pos = $i+1;
+							$url = "";	//get the url
+							while($input[$pos] != "[" && $pos < $len){
+								$url .= $input[$pos];
+								$pos++;
+							}
 							break;
 						case substr($tag, 0, 2) == "/a":
-							$article .= "\">here</a>";
+							$article .= "\">".$url."</a>";
 							$i += 3;
 							break;
 						default:
@@ -93,6 +114,9 @@
 				}				
 			}
 			$article .= "</div>";
+			
+			echo $articleName."<br />";
+			echo $description."<br />";
 			echo $article;
 		}
 
