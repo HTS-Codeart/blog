@@ -12,7 +12,7 @@ DEFINE('INCLUDES',SITE_ROOT . '/includes');
 DEFINE('HEADER',INCLUDES . '/templates/header.php');
 DEFINE('FOOTER',INCLUDES . '/templates/footer.php');
 DEFINE('FUNCTIONS',INCLUDES . '/functions');
-
+DEFINE('SIDEBAR',INCLUDES . '/templates/sidebar.php');
 
 
 /* Require all the required shiz here */
