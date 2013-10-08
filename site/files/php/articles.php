@@ -98,10 +98,5 @@
 
 
 ?>
-Allowed tags:<br />[h1][/h1]&nbsp;[h2][/h2]&nbsp;[code][/code]&nbsp;[img][/img]&nbsp;[center][/center]&nbsp;[b][/b]&nbsp;[i][/i]&nbsp;[u][/u]&nbsp;[a][/a]
-<form method="post" action="articles.php" name="articleForm">
-	<textarea rows="30" cols="100" name="article" value="" >
-	</textarea>	
-	<input type="submit" />
-</form>
+
 
