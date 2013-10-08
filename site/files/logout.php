@@ -1,1 +1,0 @@
-/* Destroy the users session in this script */
