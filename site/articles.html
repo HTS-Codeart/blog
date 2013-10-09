@@ -11,39 +11,39 @@ require_once(SIDEBAR);
 <title>Artilcles</title>
 </head>
 <body >
-<center>
-<br /><br /><br />
-<h1><u>Articles</u></h1>
+
+<br /><br />
+<div class="content_heading"><h3>Articles</h3></div>
 <ul id="menu">
 <li><a href="articles.html">Browse Articles</a></li>
 <li><a href="articles.html?sub=1">Submit an Article</a></li>
-</u><br /><br /><hr>
+</u><br /><br /><br />
 <?php
 
 $artilceBrowser = "No articles yet.";
 
-$submission = "<form method=\"post\" action=\"articles.php\" name=\"articleForm\">
-	<strong>Title:</strong><br/><input type=\"text\" name=\"articleName\"/><br /><br />
-	<strong>Descrition:</strong><br/><textarea rows=\"7\" cols=\"45\" name=\"description\" value=\"\" >
+$submission = '<div class="blog_entry"><br /><form method="post" action="articles.php" name="articleForm">
+	<strong>Title:</strong><br/><input type="text" name="articleName" size="25%"/><br /><br />
+	<strong>Descrition:</strong><br/><textarea rows="7" cols="45" name="description" value="" >
 	</textarea><br />
 	<br /><strong>Category:</strong>
-	<select name=\"category\" >
-		<option value=\"networking\">Networking</option>
-		<option value=\"os\">Operating System</option>
-  		<option value=\"programming\">Programming</option>
-  		<option value=\"re\">Reverse Engineering</option>
-  		<option value=\"security\">Security</option>
-  		<option value=\"web\">Web</option>
-  		<option value=\"other\">Other</option>
+	<select name="category" >
+		<option value="networking">Networking</option>
+		<option value="os\">Operating System</option>
+  		<option value="programming">Programming</option>
+  		<option value="re">Reverse Engineering</option>
+  		<option value="security">Security</option>
+  		<option value="web">Web</option>
+  		<option value="other">Other</option>
 	</select>
 	<br /><strong>Article:</strong><br />
-	<div style=\"background-color:#171717;\">
+	<div style="background-color:#171717;" align="center">
 	Allowed tags:<br />[h1]&nbsp;[h2]&nbsp;[a]&nbsp;[code]&nbsp;[img]&nbsp;[center]&nbsp;[b]&nbsp;[i]&nbsp;[u]
 	</div>
-	<textarea rows=\"25\" cols=\"90\" name=\"article\" value=\"\" >
+	<textarea rows="25" cols="90" name="article" value="" >
 	</textarea>
-	<input type=\"submit\" value=\"Preview Article\" />
-</form><br />";
+	<input type="submit" value="Preview Article" />
+</form></div><br />';
 
 if(isset($_GET['sub'])){
 	echo $submission;
@@ -55,7 +55,7 @@ if(isset($_GET['sub'])){
 ?>
 
 
-</center>
+
 </body>
 <?php  require_once(FOOTER); ?>
 </html>

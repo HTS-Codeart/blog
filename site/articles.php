@@ -1,5 +1,6 @@
 <?php
-		if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['description'])){
+		if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['description'])
+		&& $_POST['article'] != "" && $_POST['articleName'] != "" && $_POST['description'] != ""){ 
 			$articleName = htmlentities($_POST['articleName']);	//sanatize all the things
 			$description = htmlentities($_POST['description']);
 			$input = htmlentities($_POST['article']);
@@ -121,15 +122,16 @@
 			}
 			$article .= "</div>";
 			
-			echo "<link rel=\"stylesheet\" href=\"css/style.css\" />";
 			echo "<h2>".$articleName."</h2><br />";
 			echo "Category: ".$cat."<br />";
 			echo "Submitted: ".date('l jS \of F Y h:i:s A')."<br/>";
 			echo "<h4>Description:</h4><br />".$description."<br /><br />";
 			echo "<h4>Article:</h4><br />".$article;
+		}else{
+			echo "All Form must be filled.";
 		}
 
 
 ?>
-
+<link rel="stylesheet" href="css/style.css" />
 
