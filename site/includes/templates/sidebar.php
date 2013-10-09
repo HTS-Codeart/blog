@@ -1,6 +1,6 @@
 <?php
 $sidebar = '
-<div id="site_content">	
+<div id="site_content">
 <div class="sidebar_container">
 
 <!-- Have this done via php to switch login/Register with quick post? My account?-->
