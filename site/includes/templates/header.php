@@ -1,5 +1,6 @@
 <?php
-$header = '<head>
+$header = '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
   <title>HTS-Codeart</title>
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
   <script type="text/javascript" src="/js/jquery.min.js"></script>
@@ -8,7 +9,7 @@ $header = '<head>
 <body>
 
 <div id="main">
-  div id="banner">
+  <div id="banner">
   <div id="welcome">
     <h1>HTS Codeart</h1>
   </div>
