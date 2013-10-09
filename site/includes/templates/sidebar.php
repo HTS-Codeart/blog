@@ -6,11 +6,11 @@ $sidebar = '
 <!-- Have this done via php to switch login/Register with quick post? My account?-->
 <div class="sidebar">
   <div class="sidebar_item">
-    <h2>Login or <a href="/register.html">Register</a></h2>
-    <form name="login" method="post" action="login.php">
+    <h2>Login or <a href="/members/register.html">Register</a></h2>
+    <form name="login" method="post" action="/members/login.php">
       <input name="username" type="text" id="username" value="Email">
       <input name="password" type="password" id="password" value="password">
-      <input type="submit" name="Submit" value="Login"> <a href="/reset.html">Lost password?</a>
+      <input type="submit" name="Submit" value="Login"> <a href="/members/reset.html">Lost password?</a>
     </form>
   </div>
 </div>
