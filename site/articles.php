@@ -122,13 +122,7 @@
 			}
 			$article .= "</div>";
 
-			echo "<h2>".$articleName."</h2><br />";
-			echo "Category: ".$cat."<br />";
-			echo "Submitted: ".date('l jS \of F Y h:i:s A')."<br/>";
-			echo "<h4>Description:</h4><br />".$description."<br /><br />";
-			echo "<h4>Article:</h4><br />".$article;
-		}else{
-			echo "All Form must be filled.";
+			//send to db
 		}
 
 
