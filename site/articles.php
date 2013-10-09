@@ -1,6 +1,6 @@
 <?php
 		if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['description'])
-		&& $_POST['article'] != "" && $_POST['articleName'] != "" && $_POST['description'] != ""){ 
+		&& $_POST['article'] != "" && $_POST['articleName'] != "" && $_POST['description'] != ""){
 			$articleName = htmlentities($_POST['articleName']);	//sanatize all the things
 			$description = htmlentities($_POST['description']);
 			$input = htmlentities($_POST['article']);
@@ -14,7 +14,7 @@
 				$cat = "other";
 			}
 			$article = "<div id=\"article\">";
-			
+
 			for($i = 0; $i < strlen($input); $i++){	//parse the input
 				if($input[$i] == "\n"){
 					$article .= "<br />";
@@ -23,10 +23,10 @@
 				}else if($input[$i] == " "){
 					$article .= "&nbsp;";
 				}else if($input[$i] == "["){	//tags
-					$tag = substr($input, $i+1, 7);					
+					$tag = substr($input, $i+1, 7);
 					switch($tag){
 						case substr($tag, 0, 2) == "h1":
-							$article .= "<h2>";	
+							$article .= "<h2>";
 							$i += 3;
 							break;
 						case substr($tag, 0, 3) == "/h1":
@@ -50,7 +50,7 @@
 							$i += 6;
 							break;
 						case substr($tag, 0, 3) == "img":
-							$article .= "<img src=\"";	
+							$article .= "<img src=\"";
 							$i += 4;
 							$pos = $i+1;
 							$imgUrl = "";	//get the url
@@ -100,7 +100,7 @@
 							$i += 8;
 							break;
 						case substr($tag, 0, 1) == "a":
-							$article .= "<a href=\"";	
+							$article .= "<a href=\"";
 							$i += 2;
 							$pos = $i+1;
 							$url = "";	//get the url
@@ -115,13 +115,13 @@
 							break;
 						default:
 							break;
-					}	
+					}
 				}else{
 					$article .= $input[$i];
-				}				
+				}
 			}
 			$article .= "</div>";
-			
+
 			echo "<h2>".$articleName."</h2><br />";
 			echo "Category: ".$cat."<br />";
 			echo "Submitted: ".date('l jS \of F Y h:i:s A')."<br/>";
@@ -133,5 +133,3 @@
 
 
 ?>
-<link rel="stylesheet" href="css/style.css" />
-
