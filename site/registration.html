@@ -1,8 +1,12 @@
 <html>
 
 <?php
- include 'global.include.php';
+ require_once('global.include.php');
+ require_once(HEADER);
+ require_once(NAVBAR);
+ require_once(SIDEBAR);
 ?>
+
 <br>
 
 <table width="500" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="gray">
@@ -68,4 +72,5 @@
   </form>
 </tr>
 </table>
-</html>
+
+<?php require_once(FOOTER); ?>
