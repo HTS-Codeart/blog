@@ -4,7 +4,19 @@ $header = '<head>
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
   <script type="text/javascript" src="/js/jquery.min.js"></script>
   <script type="text/javascript" src="/js/image_slide.js"></script>
-</head>';
+</head>
+<body>
+
+<div id="main">
+  div id="banner">
+  <div id="welcome">
+    <h1>HTS Codeart</h1>
+  </div>
+  <div id="socialmedia">
+    <img src="#" alt="IRC"/>
+    <img src="#" alt="Github"/>
+  </div>
+</div>';
 
 echo $header;
 ?>
