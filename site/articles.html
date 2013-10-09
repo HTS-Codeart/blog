@@ -1,5 +1,8 @@
 <?php
-include 'global.include.php';
+require_once('global.include.php');
+require_once(HEADER);
+require_once(NAVBAR);
+require_once(SIDEBAR);
 
 ?>
 <html>
@@ -20,10 +23,10 @@ include 'global.include.php';
 $artilceBrowser = "No articles yet.";
 
 $submission = "<form method=\"post\" action=\"articles.php\" name=\"articleForm\">
-	Title:<br/><input type=\"text\" name=\"articleName\"/><br /><br />
-	Descrition:<br/><textarea rows=\"5\" cols=\"30\" name=\"description\" value=\"\" >
+	<strong>Title:</strong><br/><input type=\"text\" name=\"articleName\"/><br /><br />
+	<strong>Descrition:</strong><br/><textarea rows=\"7\" cols=\"45\" name=\"description\" value=\"\" >
 	</textarea><br />
-	<br />Category:
+	<br /><strong>Category:</strong>
 	<select name=\"category\" >
 		<option value=\"networking\">Networking</option>
 		<option value=\"os\">Operating System</option>
@@ -33,11 +36,13 @@ $submission = "<form method=\"post\" action=\"articles.php\" name=\"articleForm\
   		<option value=\"web\">Web</option>
   		<option value=\"other\">Other</option>
 	</select>
-	<br />Article:<br />
-	Allowed tags:<br />[h1][/h1]&nbsp;[h2][/h2]&nbsp;[a][/a]&nbsp;[code][/code]&nbsp;[img][/img]&nbsp;[center][/center]&nbsp;[b][/b]&nbsp;[i][/i]&nbsp;[u][/u]<br />
-	<textarea rows=\"30\" cols=\"80\" name=\"article\" value=\"\" >
+	<br /><strong>Article:</strong><br />
+	<div style=\"background-color:#171717;\">
+	Allowed tags:<br />[h1]&nbsp;[h2]&nbsp;[a]&nbsp;[code]&nbsp;[img]&nbsp;[center]&nbsp;[b]&nbsp;[i]&nbsp;[u]
+	</div>
+	<textarea rows=\"25\" cols=\"85\" name=\"article\" value=\"\" >
 	</textarea>
-	<input type=\"submit\" value=\"preview\" />
+	<input type=\"submit\" value=\"Preview\" />
 </form>";
 
 if(isset($_GET['sub'])){
@@ -52,4 +57,5 @@ if(isset($_GET['sub'])){
 
 </center>
 </body>
+<?php  require_once(FOOTER); ?>
 </html>
