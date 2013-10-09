@@ -5,7 +5,8 @@
    You can include the file here, as well as other files, so that all we need is to add this one file to static pages.
 */
 
-DEFINE('SITE_ROOT',getcwd());
+//DEFINE('SITE_ROOT',getcwd());
+DEFINE('SITE_ROOT', '/home/a7057662/public_html');
 DEFINE('INCLUDES',SITE_ROOT . '/includes');
 DEFINE('HEADER',INCLUDES . '/templates/header.php');
 DEFINE('FOOTER',INCLUDES . '/templates/footer.php');
