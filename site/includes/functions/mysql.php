@@ -4,7 +4,7 @@
 	function db_connect() {
 		require_once('mysqlinfo.php');
 		$dbinfo = get_mysqlinfo();
-		return mysqli_connect($dbinfo['host'],$dbinfo['user'],$dbinfo['pass'],$dbinfo['db']);
+		return mysqli_connect($dbinfo['host'],$dbinfo['username'],$dbinfo['pass'],$dbinfo['db']);
 	}
 
 	function db_query($sql) {
