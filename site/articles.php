@@ -7,7 +7,7 @@
 			$url = "";
 			$imgUrl = "";
 			$len = strlen($input);
-			$categories = ["networking","os","programming","re","security","web","other"];
+			$categories = array("networking","os","programming","re","security","web","other");
 			if( in_array($_POST['category'], $categories) ){
 				$cat = $_POST['category'];
 			}else{
