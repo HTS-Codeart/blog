@@ -7,6 +7,7 @@ if($logged_in == true) {
   "Home" => "/index.html",
   "My Account" => "/#",
   "Settings" => "/#",
+  "Articles" => "/articles.html",
   "About Us" => "/info.html",
   "Logout" => "/logout.php",
  );
@@ -14,6 +15,7 @@ if($logged_in == true) {
   $links = array(
   "Home" => "/index.html",
   "Register" => "/registration.html",
+  "Articles" => "/articles.html",
   "About Us" => "/info.html",
   );
 }
