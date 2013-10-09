@@ -115,9 +115,11 @@
 			}
 			$article .= "</div>";
 			
-			echo $articleName."<br />";
-			echo $description."<br />";
-			echo $article;
+			echo "<link rel=\"stylesheet\" href=\"css/style.css\" />";
+			echo "<h2>".$articleName."</h2><br />";
+			echo "Submitted: ".date('l jS \of F Y h:i:s A')."<br/>";
+			echo "<h4>Description:</h4><br />".$description."<br /><br />";
+			echo "<h4>Article:</h4><br />".$article;
 		}
 
 
