@@ -8,8 +8,8 @@ $sidebar = '
   <div class="sidebar_item">
     <h2>Login or <a href="/members/register.html">Register</a></h2>
     <form name="login" method="post" action="/members/login.php">
-      <input name="username" type="text" id="username" value="Email">
-      <input name="password" type="password" id="password" value="password">
+      <input name="username" type="text" id="username" value="Email" size="15">
+      <input name="password" type="password" id="password" value="password" size="15">
       <input type="submit" name="Submit" value="Login"> <a href="/members/reset.html">Lost password?</a>
     </form>
   </div>
