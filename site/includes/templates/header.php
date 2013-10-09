@@ -15,7 +15,7 @@ $header = '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
   </div>
   <div id="socialmedia">
     <!-- <img src="#" alt="IRC"/> -->
-    <a href="http://www.github.com/HTS-Codeart"><img src="/images/github.png" alt="Github"/></a>
+    <a href="http://www.github.com/HTS-Codeart" target="_blank"><img src="/images/github.png" alt="Github"/></a>
   </div>
 </div>';
 
