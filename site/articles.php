@@ -1,5 +1,7 @@
 <?php
-		if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['description'])
+
+if(isset($_GET['sub'])){
+	if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['description'])
 		&& $_POST['article'] != "" && $_POST['articleName'] != "" && $_POST['description'] != ""){
 			$articleName = htmlentities($_POST['articleName']);	//sanatize all the things
 			$description = htmlentities($_POST['description']);
@@ -13,7 +15,8 @@
 			}else{
 				$cat = "other";
 			}
-			$article = "<div id=\"article\">";
+			$article = "<div id=\"article\" >";
+			$partOfCode = false;
 
 			for($i = 0; $i < strlen($input); $i++){	//parse the input
 				if($input[$i] == "\n"){
@@ -22,9 +25,14 @@
 					$article .= "&nbsp;&nbsp;&nbsp;&nbsp;";
 				}else if($input[$i] == " "){
 					$article .= "&nbsp;";
-				}else if($input[$i] == "["){	//tags
+				}else if($input[$i] == "[" && !$partOfCode){	//tags
 					$tag = substr($input, $i+1, 7);
 					switch($tag){
+						case substr($tag, 0, 4) == "code":
+							$article .= "<div id=\"code\">";
+							$i += 5;
+							$partOfCode = true;
+							break;
 						case substr($tag, 0, 2) == "h1":
 							$article .= "<h2>";
 							$i += 3;
@@ -41,17 +49,7 @@
 							$article .= "</h3>";
 							$i += 4;
 							break;
-						case substr($tag, 0, 4) == "code":
-							$article .= "<div id=\"code\">";
-							$i += 5;
-							break;
-						case substr($tag, 0, 5) == "/code":
-							$article .= "</div>";
-							$i += 6;
-							break;
 						case substr($tag, 0, 3) == "img":
-							$article .= "<img src=\"";
-							$i += 4;
 							$pos = $i+1;
 							$imgUrl = "";	//get the url
 							while($input[$pos] != "[" && $pos < $len){
@@ -59,8 +57,13 @@
 								$pos++;
 							}
 							//help prevent csrf
-							if( substr($imgUrl, -4) != ".png" && substr($imgUrl, -4) != ".jpg" && substr($imgUrl, -5) != ".jpeg" && substr($imgUrl, -4) != ".png"){
-								$i += strlen($imgUrl);
+							if( substr($imgUrl, -4) != ".png" && substr($imgUrl, -4) != ".jpg" && substr($imgUrl, -5) != ".jpeg" && substr($imgUrl, -4) != ".png" 
+							&& substr($imgUrl, -4) != ".gif"){
+								$i += strlen($imgUrl) + 6;
+								$article .= "[INVALID IMAGE]";
+							}else{
+								$article .= "<img src=\"";
+								$i += 4;
 							}
 							break;
 						case substr($tag, 0, 4) == "/img":
@@ -95,18 +98,23 @@
 							$article .= "<center>";
 							$i += 7;
 							break;
-						case substr($tag, 0, 7) == "/code":
+						case substr($tag, 0, 7) == "/center":
 							$article .= "</center>";
 							$i += 8;
 							break;
 						case substr($tag, 0, 1) == "a":
-							$article .= "<a href=\"";
 							$i += 2;
 							$pos = $i+1;
 							$url = "";	//get the url
 							while($input[$pos] != "[" && $pos < $len){
 								$url .= $input[$pos];
 								$pos++;
+							}
+							if( substr($url, 0, 7) == "http://" || substr($url, 0, 8) == "https://"){
+								$article .= "<a href=\"";
+							}else{
+								$article .= "[INVALID URL. Must contain \"http://\" or \"https://\"]";
+								$i += strlen($url)+4;
 							}
 							break;
 						case substr($tag, 0, 2) == "/a":
@@ -116,14 +124,24 @@
 						default:
 							break;
 					}
+				}else if( $input[$i] == "["){
+					$tag = substr($input, $i+1, 7);
+					if(substr($tag, 0, 5) == "/code"){
+						$article .= "</div>";
+						$i += 6;
+						$partOfCode = false;
+					}else{
+						$article .= $input[$i];
+					}
 				}else{
 					$article .= $input[$i];
 				}
 			}
 			$article .= "</div>";
 
-			//send to db
+			//submit to the db
 		}
+}
 
 
 ?>
