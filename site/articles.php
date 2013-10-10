@@ -1,7 +1,6 @@
 <?php
 
-if(isset($_GET['sub'])){
-	if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['description'])
+if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['description'])
 		&& $_POST['article'] != "" && $_POST['articleName'] != "" && $_POST['description'] != ""){
 			$articleName = htmlentities($_POST['articleName']);	//sanatize all the things
 			$description = htmlentities($_POST['description']);
@@ -15,8 +14,9 @@ if(isset($_GET['sub'])){
 			}else{
 				$cat = "other";
 			}
-			$article = "<div id=\"article\" >";
+			$article = "<div id=\"article\" class=\"blog_entry\">";
 			$partOfCode = false;
+			$numOpenTags = 0;
 
 			for($i = 0; $i < strlen($input); $i++){	//parse the input
 				if($input[$i] == "\n"){
@@ -29,25 +29,30 @@ if(isset($_GET['sub'])){
 					$tag = substr($input, $i+1, 7);
 					switch($tag){
 						case substr($tag, 0, 4) == "code":
-							$article .= "<div id=\"code\">";
+							$article .= "<strong>Code:</strong><br /><div id=\"code\">";
 							$i += 5;
+							$numOpenTags += 1;
 							$partOfCode = true;
 							break;
 						case substr($tag, 0, 2) == "h1":
 							$article .= "<h2>";
 							$i += 3;
+							$numOpenTags += 1;
 							break;
 						case substr($tag, 0, 3) == "/h1":
 							$article .= "</h2>";
 							$i += 4;
+							$numOpenTags -= 1;
 							break;
 						case substr($tag, 0, 2) == "h2":
 							$article .= "<h3>";
 							$i += 3;
+							$numOpenTags += 1;
 							break;
 						case substr($tag, 0, 3) == "/h2":
 							$article .= "</h3>";
 							$i += 4;
+							$numOpenTags -= 1;
 							break;
 						case substr($tag, 0, 3) == "img":
 							$pos = $i+1;
@@ -64,54 +69,67 @@ if(isset($_GET['sub'])){
 							}else{
 								$article .= "<img src=\"";
 								$i += 4;
+								$numOpenTags += 1;
 							}
 							break;
 						case substr($tag, 0, 4) == "/img":
 							$article .= "\"/>";
 							$i += 5;
+							$numOpenTags -= 1;
 							break;
 						case substr($tag, 0, 1) == "b":
 							$article .= "<strong>";
 							$i += 2;
+							$numOpenTags += 1;
 							break;
 						case substr($tag, 0, 2) == "/b":
 							$article .= "</strong>";
 							$i += 3;
+							$numOpenTags -= 1;
 							break;
 						case substr($tag, 0, 1) == "i":
 							$article .= "<i>";
 							$i += 2;
+							$numOpenTags += 1;
 							break;
 						case substr($tag, 0, 2) == "/i":
 							$article .= "</i>";
 							$i += 3;
+							$numOpenTags -= 1;
 							break;
 						case substr($tag, 0, 1) == "u":
 							$article .= "<u>";
 							$i += 2;
+							$numOpenTags += 1;
 							break;
 						case substr($tag, 0, 2) == "/u":
 							$article .= "</u>";
 							$i += 3;
+							$numOpenTags -= 1;
 							break;
 						case substr($tag, 0, 6) == "center":
 							$article .= "<center>";
 							$i += 7;
+							$numOpenTags += 1;
 							break;
 						case substr($tag, 0, 7) == "/center":
 							$article .= "</center>";
 							$i += 8;
+							$numOpenTags -= 1;
 							break;
 						case substr($tag, 0, 1) == "a":
 							$i += 2;
-							$pos = $i+1;
-							$url = "";	//get the url
-							while($input[$pos] != "[" && $pos < $len){
-								$url .= $input[$pos];
-								$pos++;
-							}
+							if($i+1 < $len){
+								$pos = $i+1;
+								$url = "";	//get the url
+								while($input[$pos] != "[" && $pos < $len){
+									$url .= $input[$pos];
+									$pos++;
+								}
+							}else $url = "";
 							if(filter_var($url, FILTER_VALIDATE_URL)) {
 								$article .= "<a href=\"";
+								$numOpenTags += 1;
 							}else{
 								$article .= "[INVALID URL]";
 								$i += strlen($url)+4;
@@ -120,6 +138,7 @@ if(isset($_GET['sub'])){
 						case substr($tag, 0, 2) == "/a":
 							$article .= "\">".$url."</a>";
 							$i += 3;
+							$numOpenTags -= 1;
 							break;
 						default:
 							break;
@@ -129,6 +148,7 @@ if(isset($_GET['sub'])){
 					if(substr($tag, 0, 5) == "/code"){
 						$article .= "</div>";
 						$i += 6;
+						$numOpenTags -= 1;
 						$partOfCode = false;
 					}else{
 						$article .= $input[$i];
@@ -137,11 +157,15 @@ if(isset($_GET['sub'])){
 					$article .= $input[$i];
 				}
 			}
-			$article .= "</div>";
+			$article .= "</div></div>";
 
-			//submit to the db
-		}
+			if($numOpenTags == 0){
+				//submit to db
+			}else{
+				echo "All tags must be closed.";
+			}
 }
 
 
 ?>
+
