@@ -1,3 +1,4 @@
+<?php
 /* Ensure proper sanitation of fields: stripslashes(mysql_real_escape_string($data));
    Connect to the database
    Check the database for existing users with the same information
@@ -29,8 +30,6 @@ PRIMARY KEY ( `id` )
 
 
 */
-
-<?php
 
 // Generating a random salt value
 function unique_md5() {
