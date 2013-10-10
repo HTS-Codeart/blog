@@ -53,7 +53,7 @@ if(isset($_GET['sub'])){
 			}else{
 				$cat = "other";
 			}
-			$article = "<div id=\"article\" >";
+			$article = "<div id=\"article\" class=\"blog_entry\">";
 			$partOfCode = false;
 
 			for($i = 0; $i < strlen($input); $i++){	//parse the input
@@ -67,7 +67,7 @@ if(isset($_GET['sub'])){
 					$tag = substr($input, $i+1, 7);
 					switch($tag){
 						case substr($tag, 0, 4) == "code":
-							$article .= "<div id=\"code\">";
+							$article .= "<strong>Code:</strong><br /><div id=\"code\">";
 							$i += 5;
 							$partOfCode = true;
 							break;
@@ -175,7 +175,7 @@ if(isset($_GET['sub'])){
 					$article .= $input[$i];
 				}
 			}
-			$article .= "</div>";
+			$article .= "</div></div>";
 
 			echo "<div class=\"blog_entry\"><div class=\"content_heading\"><h2>".$articleName."</h2></div><br />";
 			echo "Category: ".$cat."<br />";
