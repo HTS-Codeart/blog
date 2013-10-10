@@ -41,7 +41,7 @@ function unique_md5() {
 /* in depth form validation needs to happen here */
 
 $fname = db_escape($_POST['fname']);
-$lname = db_escape($_POST['lname');
+$lname = db_escape($_POST['lname']);
 $username = db_escape($_POST['username']);
 $password = db_escape($_POST['password']);
 $registration_email = db_escape($_POST['email']);
