@@ -14,7 +14,7 @@ if($logged_in == true) {
 } else {
   $links = array(
   "Home" => "/index.html",
-  "Register" => "/registration.html",
+  "Register" => "/register.html",
   "Articles" => "/articles.html",
   "About Us" => "/info.html",
   );
