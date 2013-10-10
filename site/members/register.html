@@ -7,6 +7,16 @@
  require_once(SIDEBAR);
 ?>
 
+<script>
+	function checkPassword(){
+		if(document.getElementById("regPassword").value != document.getElementById("confirm").value){
+			document.getElementById("confirmMessage").innerHTML = "Passwords do not match";
+		}else{
+			document.getElementById("confirmMessage").innerHTML = "";
+		}
+	}
+</script>
+
 <br>
 
 <table width="500" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="gray">
@@ -33,7 +43,13 @@
           <tr>
             <td>Password</td>
             <td>:</td>
-            <td><input name="password" type="password" id="password"></td>
+            <td><input name="password" type="password" id="regPassword" ></td>
+          </tr>
+          
+          <tr>
+            <td>Confirm Pass</td>
+            <td>:</td>
+            <td><input name="confirm" type="password" id="confirm" onChange="checkPassword();"><p id="confirmMessage" style="display:inline"></p></td>
           </tr>
 
           <tr>
