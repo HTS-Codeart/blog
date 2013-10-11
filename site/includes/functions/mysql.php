@@ -16,6 +16,13 @@
 		}
 	}
 
+	function row_count($sql) {
+		$con = db_connect();
+		$query = mysqli_query($con, $sql);
+		$count = mysqli_num_rows($query);
+		return $count;
+	}
+
 	function db_escape($string) {
 		$con = db_connect();
 		return mysqli_real_escape_string($con,$string);

@@ -6,29 +6,29 @@ require_once('../global.include.php');
 */
 
 if($logged_in == true) {
-	echo('You are already logged in to an account, please <a href="/logout.php">logout</a> first.');
+  echo('You are already logged in to an account, please <a href="/logout.php">logout</a> first.');
 }
 else {
-	db_connect();
+  $sql = "SELECT * FROM `users` WHERE username='$username' and password='$password'";
+  $con = db_connect();
+  $username = db_escape($_POST['username']);
+  $password = db_escape($_POST['password']);
 
-	$username = db_escape($_POST['username']);
-	$password = db_escape($_POST['password']);
+  $query = db_query($sql);
 
-	$query = db_query("SELECT * FROM `users` WHERE username='$username' and password='$password'");
+  $count = row_count($sql);
 
-	$count = mysql_num_rows($query);
-
-	if($count == 1) {
-		// Register username & password
-		session_register("username");
-		session_register("password");
-		$_SESSION['loggedin'] = true; // Let us know they are logged in
-		mysql_close(db_connect()); // Always close MySQL connection to prevent issues (too many sql sessions)
-		header("location:index.html"); // Redirect the user
-	}
-	else {
-		mysql_close(db_connect()); // Always close MySQL connection to prevent issues (too many sql sessions)
-		echo('Wrong username and password combination! <a href="/login.html">Try again</a>');
-	}
+  if($count == 1) {
+    // Register username & password
+    session_register("username");
+    session_register("password");
+    $_SESSION['loggedin'] = true; // Let us know they are logged in
+    mysql_close($con); // Always close MySQL connection to prevent issues (too many sql sessions)
+    header("location:index.html"); // Redirect the user
+  }
+  else {
+    //mysql_close($con); // Always close MySQL connection to prevent issues (too many sql sessions)
+    echo('Wrong username and password combination! <a href="/login.html">Try again</a>');
+  }
 }
 ?>
