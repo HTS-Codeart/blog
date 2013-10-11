@@ -424,7 +424,7 @@ ul img {
   font: normal 130% arial, sans-serif;
   color: #FFF;}
 
-#code {
+.code {
 background-color:#171717;
 word-wrap:break-word;
 -moz-box-shadow:2px 2px 3px 3px white;
