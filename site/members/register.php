@@ -28,6 +28,12 @@ CREATE TABLE `a7057662_db`.`login` (
 PRIMARY KEY ( `id` )
 ) ENGINE = MYISAM
 
+We need to add in verification on all things that are $_POST'ed. That way someone doesn't manually enter a bday that looks like <script></script>.
+When doing that, we should check whther the month form is a month, the day is an accurate day, and the year is a possible year. And have a list of timezones to choose from and verify what's posted is one of those in the list.
+username needs regex and a min length of 1. password min length of whatever and potentially regex.
+email needs the email verificatoin
+hide_email must be either 0 or 1
+might want a list for security_question and choose from it
 
 */
 
