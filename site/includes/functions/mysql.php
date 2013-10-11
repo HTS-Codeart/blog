@@ -14,6 +14,7 @@
     } else {
       return $result;
     }
+    mysqli_close($con);
   }
 
   function row_count($sql) {
@@ -21,10 +22,12 @@
     $result = db_query($sql);
     $count  = mysqli_num_rows($result);
     return $count;
+    mysqli_close($con);
   }
 
   function db_escape($string) {
     $con = db_connect();
     return mysqli_real_escape_string($con,$string);
+    mysqli_close($con);
   }
 ?>
