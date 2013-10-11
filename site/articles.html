@@ -17,7 +17,6 @@ require_once(SIDEBAR);
 $artilceBrowser = '<div id="article" ><br />
 	<div style="padding:10px;background-color:#171717">
 	<form method="post">
-		Search Articles: <input type="text" size="30%"/> <input type="submit" value="Search">
 		Category: <select name="category" >
 			<option value="all">All</option>
 			<option value="networking">Networking</option>
@@ -27,7 +26,9 @@ $artilceBrowser = '<div id="article" ><br />
   			<option value="security">Security</option>
   			<option value="web">Web</option>
   			<option value="other">Other</option>
-		</select>
+		</select>&nbsp;&nbsp;&nbsp;
+		<input onfocus="if (this.value==\'Search Query\') this.value = \'\'" type="text" value="Search Query" size="20%">
+		<input type="submit" vaue="Search">
 	</form>
 	</div><br/>
 	<h2 >Things About Stuff</h2>
