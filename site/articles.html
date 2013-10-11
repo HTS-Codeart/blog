@@ -15,7 +15,7 @@ require_once(SIDEBAR);
 <?php
 
 $artilceBrowser = '<div id="article" ><br />
-	<div id="articleBox" style="padding:10px">
+	<div style="padding:10px;background-color:#171717">
 	<form method="post">
 		Search Articles: <input type="text" size="30%"/> <input type="submit" value="Search">
 		Category: <select name="category" >
@@ -30,9 +30,11 @@ $artilceBrowser = '<div id="article" ><br />
 		</select>
 	</form>
 	</div><br/>
-	<h2><a href="articles.html#">Awesome Title</a></h2><b>Category:</b> Programming&nbsp;&nbsp;&nbsp;&nbsp;
+	<h2 >Things About Stuff</h2>
+	<b>Written by:</b> 0phidian<br/><b>Category:</b> Programming&nbsp;&nbsp;&nbsp;&nbsp;
 	<b>Submitted: </b>Friday 11th of October 2013 02:22:37 AM
-	<br/><b>Description:</b> Thing about stuff and things. This is just an example of the layout for articles that will be available.<hr></div>';
+	<br/><b>Description:</b> Thing about stuff and things. This is just an example of the layout for articles that will be available.
+	<p style="inline" align="right" ><a href="#">Veiw Article</a></p><hr></div>';
 
 $submission = '<div ><br /><form method="post" action="articles.html?sub=1" name="articleForm" id="articleForm">
 	<strong>Title:</strong><br/><input type="text" name="articleName" size="25%"/><br /><br />
@@ -50,7 +52,7 @@ $submission = '<div ><br /><form method="post" action="articles.html?sub=1" name
 	</select>
 	<br /><strong>Article:</strong><br />
 	<strong>Note:</strong> All forms must be filled. All urls must contain "http://" or "https://". Make sure to close all tags.<br/>
-	<div id="articleBox" align="center">
+	<div style="background-color:#171717" align="center">
 	Allowed tags:<br />[h1]&nbsp;[h2]&nbsp;[a]&nbsp;[code]&nbsp;[img]&nbsp;[center]&nbsp;[b]&nbsp;[i]&nbsp;[u]
 	</div>
 	<textarea rows="25" cols="85" name="article" value="" ></textarea>
