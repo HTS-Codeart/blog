@@ -6,7 +6,7 @@ require_once('../global.include.php');
 */
 
 if($logged_in == true) {
-	echo('You are already logged in to an account, please <a href="/logout.php">logout</a> first.')
+	echo('You are already logged in to an account, please <a href="/logout.php">logout</a> first.');
 }
 else {
 	db_connect();
