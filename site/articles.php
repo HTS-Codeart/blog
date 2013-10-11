@@ -161,6 +161,8 @@ if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['des
 
 			if($numOpenTags == 0){
 				//submit to db
+				header("Location: articles.html?sub=2");
+				die();
 			}else{
 				echo "All tags must be closed.";
 			}
