@@ -13,7 +13,25 @@ require_once(SIDEBAR);
 </u><br /><br /><br />
 <?php
 
-$artilceBrowser = "No articles yet.";
+$artilceBrowser = '<div id="article" class="blog_entry"><br />
+	<div id="articleBox" style="padding:10px">
+	<form>
+		Search Articles: <input type="text" size="30%"/> <input type="submit" value="Search">
+		Category: <select name="category" >
+			<option value="all">All</option>
+			<option value="networking">Networking</option>
+			<option value="os">Operating System</option>
+  			<option value="programming">Programming</option>
+  			<option value="re">Reverse Engineering</option>
+  			<option value="security">Security</option>
+  			<option value="web">Web</option>
+  			<option value="other">Other</option>
+		</select>
+	</form>
+	</div><br/>
+	<h2><a href="articles.html#">Awesome Title</a></h2><b>Category:</b> Programming&nbsp;&nbsp;&nbsp;&nbsp;
+	<b>Submitted: </b>Friday 11th of October 2013 02:22:37 AM
+	<br/><b>Description:</b> Thing about stuff and things. This is just an example of the layout for articles that will be available.<hr></div>';
 
 $submission = '<div class="blog_entry"><br /><form method="post" action="articles.html?sub=1" name="articleForm" id="articleForm">
 	<strong>Title:</strong><br/><input type="text" name="articleName" size="25%"/><br /><br />
@@ -31,7 +49,7 @@ $submission = '<div class="blog_entry"><br /><form method="post" action="article
 	</select>
 	<br /><strong>Article:</strong><br />
 	<strong>Note:</strong> All forms must be filled. All urls must contain "http://" or "https://". Make sure to close all tags.<br/>
-	<div style="background-color:#171717;" align="center">
+	<div id="articleBox" align="center">
 	Allowed tags:<br />[h1]&nbsp;[h2]&nbsp;[a]&nbsp;[code]&nbsp;[img]&nbsp;[center]&nbsp;[b]&nbsp;[i]&nbsp;[u]
 	</div>
 	<textarea rows="25" cols="85" name="article" value="" ></textarea>
