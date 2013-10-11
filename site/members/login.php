@@ -21,14 +21,12 @@ else {
 
   if($count == 1) {
     // Register username & password
-    session_register("username");
-    session_register("password");
-    $_SESSION['loggedin'] = true; // Let us know they are logged in
-    mysql_close($con); // Always close MySQL connection to prevent issues (too many sql sessions)
+    session_register("username");     // This will store the username in a session
+    $_SESSION['loggedin'] = true;    // Let us know they are logged in
+    mysql_close($con);              // Always close MySQL connection to prevent issues (too many sql sessions)
     header("location:index.html"); // Redirect the user
   }
   else {
-    //mysql_close($con); // Always close MySQL connection to prevent issues (too many sql sessions)
     echo('Wrong username and password combination! <a href="/members/login.html">Try again</a>');
   }
 }

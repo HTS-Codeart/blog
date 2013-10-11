@@ -7,7 +7,7 @@
   }
 
   function db_query($sql) {
-    $con = db_connect();
+    $con    = db_connect();
     $result = mysqli_query($con, $sql);
     if(!$result) {
       die("Error in SQL Query");
@@ -17,9 +17,9 @@
   }
 
   function row_count($sql) {
-    $con = db_connect();
+    $con    = db_connect();
     $result = db_query($sql);
-    $count = mysqli_num_rows($result);
+    $count  = mysqli_num_rows($result);
     return $count;
   }
 
