@@ -6,10 +6,11 @@ require_once('../global.include.php');
 */
 
 if($logged_in == true) {
-  echo('You are already logged in to an account, please <a href="/logout.php">logout</a> first.');
+  echo('You are already logged in to an account, please <a href="/members/logout.php">logout</a> first.');
 }
 else {
   $sql = "SELECT * FROM `users` WHERE username='$username' and password='$password'";
+  //$sql = "SELECT * FROM `users`";
   $con = db_connect();
   $username = db_escape($_POST['username']);
   $password = db_escape($_POST['password']);
@@ -28,7 +29,7 @@ else {
   }
   else {
     //mysql_close($con); // Always close MySQL connection to prevent issues (too many sql sessions)
-    echo('Wrong username and password combination! <a href="/login.html">Try again</a>');
+    echo('Wrong username and password combination! <a href="/members/login.html">Try again</a>');
   }
 }
 ?>
