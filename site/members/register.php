@@ -54,7 +54,13 @@ $access = 0;			//or whatever default access level is
 $security_question = db_escape($_POST['security_question']);
 $security_answer = db_escape($_POST['security_answer']);
 $signature = db_escape($_POST['signature']);
-$birthday = db_escape($_POST['birthday']);
+
+/* To get the birthday we concatenate the three forms: month, day, year */
+$birth_month = db_escape($_POST['month']);
+$birth_day = db_escape($_POST['day']);
+$birth_year = db_escape($_POST['year']);
+$birthday = "$birth_month $birth_day, $birth_year"; // Should produce something like: September 19, 1984
+
 $timezone = db_escape($_POST['timezone']);
 //$verifyhash = create_verifyhash();
 
