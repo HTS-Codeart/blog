@@ -164,8 +164,12 @@ if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['des
 				header("Location: articles.html?sub=2");
 				die();
 			}else{
-				echo "All tags must be closed.";
+				header("Location: articles.html?sub=1");
+				die();
 			}
+}else{
+	header("Location: articles.html?sub=3");
+	die();
 }
 
 

@@ -212,6 +212,8 @@ if(isset($_GET['sub']) && $_GET['sub'] == 1){
 		}
 }else if((isset($_GET['sub']) && $_GET['sub'] == 2)){
 	echo "Article successfully submitted, or at least it would be if this was finished.";
+}else if((isset($_GET['sub']) && $_GET['sub'] == 3)){
+	echo "Submission failed. Make sure all forms are filled out and all tags are closed.";
 }else{
 	echo $artilceBrowser;
 }
