@@ -23,7 +23,6 @@ else {
     // Register username & password
     session_register("username");     // This will store the username in a session
     $_SESSION['loggedin'] = true;    // Let us know they are logged in
-    mysql_close($con);              // Always close MySQL connection to prevent issues (too many sql sessions)
     header("location:index.html"); // Redirect the user
   }
   else {
