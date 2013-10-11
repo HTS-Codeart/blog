@@ -47,7 +47,7 @@ $username = db_escape($_POST['username']);
 $password = db_escape($_POST['password']);
 $registration_email = db_escape($_POST['email']);
 $registration_ip = $_SERVER['REMOTE_ADDR'];
-$registration_date = date();	//finish this
+$registration_date = date("M d, Y");	//finish this
 $hide_email = db_escape($_POST['hide_email']);
 $group = 1; 			//or whatever default group is
 $access = 0;			//or whatever default access level is
@@ -71,6 +71,20 @@ $passwordhash  = hash('sha256',($password . $salt));
 /* After everything is validated and verified
 	insert everything into the db */
 
+// THIS STILL NEEDS TONS OF VALIDATION WORK!! //
+$error = false;
 
+if(!isset($username) || $username == '') $error = true;
+if(!isset($password) || $password == '') $error = true;
+if(!isset($registration_email) || $registration_email == '') $error = true;
+if(!isset($hide_email) || $hide_email == '') $error = true;
+if(!isset($security_question) || $security_question == '') $error = true;
+if(!isset($security_answer) || $security_answer == '') $error = true;
 
+if(db_query("INSERT INTO `users` (`username`, `passwordhash`, `salt`, `registration_email`, `registration_date`, `registration_ip`, `hide_email`, `group`, `access`, `security_question`, `security_answer`, `signature`, `birthday`, `timezone`) VALUES ('$username', '$passwordhash', '$salt', '$registration_email', '$registration_date', '$registration_ip', '$hide_email', '$group', '$access', '$security_question', '$security_answer', '$signature', '$birthday', '$timezone')") && $error == false) {
+  echo('Success, you have registered your account. <a href="/members/login.html">Login</a>');
+}
+else {
+  echo('Registration was not successful, please <a href="/members/register.html">go back</a> and try again!');
+}
 ?>
