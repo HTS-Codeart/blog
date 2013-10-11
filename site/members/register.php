@@ -31,7 +31,7 @@ PRIMARY KEY ( `id` )
 
 */
 
-require_once(mysql.php); /* includes db_connect, db_query, and db_escape */
+require_once('../global.include.php'); /* includes db_connect, db_query, and db_escape */
 
 // Generating a random salt value
 function unique_md5() {
