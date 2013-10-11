@@ -6,6 +6,7 @@ require_once(SIDEBAR);
 
 ?>
 
+<div class="blog_entry">
 <div class="content_heading"><h3>Articles</h3></div>
 <ul id="menu">
 <li><a href="articles.html">Browse Articles</a></li>
@@ -13,9 +14,9 @@ require_once(SIDEBAR);
 </u><br /><br /><br />
 <?php
 
-$artilceBrowser = '<div id="article" class="blog_entry"><br />
+$artilceBrowser = '<div id="article" ><br />
 	<div id="articleBox" style="padding:10px">
-	<form>
+	<form method="post">
 		Search Articles: <input type="text" size="30%"/> <input type="submit" value="Search">
 		Category: <select name="category" >
 			<option value="all">All</option>
@@ -33,7 +34,7 @@ $artilceBrowser = '<div id="article" class="blog_entry"><br />
 	<b>Submitted: </b>Friday 11th of October 2013 02:22:37 AM
 	<br/><b>Description:</b> Thing about stuff and things. This is just an example of the layout for articles that will be available.<hr></div>';
 
-$submission = '<div class="blog_entry"><br /><form method="post" action="articles.html?sub=1" name="articleForm" id="articleForm">
+$submission = '<div ><br /><form method="post" action="articles.html?sub=1" name="articleForm" id="articleForm">
 	<strong>Title:</strong><br/><input type="text" name="articleName" size="25%"/><br /><br />
 	<strong>Descrition:</strong><br/><textarea rows="7" cols="45" name="description" value="" ></textarea>
 	<br />
@@ -236,7 +237,7 @@ if(isset($_GET['sub']) && $_GET['sub'] == 1){
 	echo $artilceBrowser;
 }
 
-
 ?>
+</div>
 
 <?php  require_once(FOOTER); ?>
