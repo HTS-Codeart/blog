@@ -31,6 +31,8 @@ PRIMARY KEY ( `id` )
 
 */
 
+require_once(mysql.php); /* includes db_connect, db_query, and db_escape */
+
 // Generating a random salt value
 function unique_md5() {
     mt_srand(microtime(true)*100000 + memory_get_usage(true));
@@ -39,8 +41,8 @@ function unique_md5() {
 
 /* in depth form validation needs to happen here */
 
-$fname = db_escape($_POST['fname']);
-$lname = db_escape($_POST['lname']);
+//$fname = db_escape($_POST['fname']); Probably will not use
+//$lname = db_escape($_POST['lname']); Probably will not use
 $username = db_escape($_POST['username']);
 $password = db_escape($_POST['password']);
 $registration_email = db_escape($_POST['email']);

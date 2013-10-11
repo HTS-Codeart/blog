@@ -1,5 +1,4 @@
 <?php
-
 	/* Here we'll have all of the DB access functions and shit */
 	function db_connect() {
 		require_once('mysqlinfo.php');
@@ -19,10 +18,6 @@
 
 	function db_escape($string) {
 		$con = db_connect();
-
 		return mysqli_real_escape_string($con,$string);
 	}
-
-
-
 ?>
