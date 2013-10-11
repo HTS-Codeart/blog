@@ -430,3 +430,12 @@ word-wrap:break-word;
 -moz-box-shadow:2px 2px 3px 3px white;
 -webkit-box-shadow:2px 2px 3px 3px white;
 box-shadow:2px 2px 3px 3px white;}
+
+
+#articleBox {
+background-color:#171717;
+border-width:2px;
+border-style:outset;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border-radius:7px;}
