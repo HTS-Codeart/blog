@@ -1,3 +1,1 @@
-#Full path is only temporary while we're waiting on the new host
-
-ErrorDocument 404 /home/a7057662/public_html/errors/404.php
+ErrorDocument 404 /errors/404.php
