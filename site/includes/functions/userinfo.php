@@ -9,7 +9,7 @@ function user_info() {
 	else $logged_in = false;
 
 	db_connect(); // Connect to the database
-	$query = db_query("SELECT * FROM `members` where username ='$username'");
+	$query = db_query("SELECT * FROM `users` where username ='$username'");
 
 	// Define some global variables, that we can use later on
 	global $user, $user_email, $user_ip, $user_sec_question, $user_sec_answer, $user_signature, $user_birthday, $user_timezone;
