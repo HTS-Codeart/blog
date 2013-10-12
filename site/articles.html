@@ -6,7 +6,7 @@ require_once(SIDEBAR);
 
 ?>
 
-<link href="highlighting/styles/sons-of-obsidian.css" type="text/css" rel="stylesheet" />
+<link href="highlighting/styles/doxy.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="highlighting/src/run_prettify.js"></script>
 
 <div class="blog_entry">
@@ -130,10 +130,7 @@ if(isset($_GET['sub']) && $_GET['sub'] == 1){
 					$tag = substr($input, $i+1, 7);
 					switch($tag){
 						case substr($tag, 0, 4) == "code":
-							$article .= "<strong>Code:</strong>&nbsp;&nbsp;
-							<a onclick=\"SelectText('code".$codeDivNum."')\" >Select All</a>&nbsp;&nbsp;
-							<a onclick=\"displayCode('code".$codeDivNum."')\">Expand</a><br />
-							<pre class=\"prettyprint\"><div id=\"code".$codeDivNum."\">";
+							$article .= "<pre class=\"prettyprint\"><strong>Code:</strong>&nbsp;&nbsp;<a onclick=\"SelectText('code".$codeDivNum."')\" >Select All</a>&nbsp;&nbsp;<a onclick=\"displayCode('code".$codeDivNum."')\">Expand</a><br /><div id=\"code".$codeDivNum."\" class=\"code\">";
 							$i += 5;
 							$numOpenTags += 1;
 							$partOfCode = true;
