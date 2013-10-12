@@ -4,7 +4,7 @@ if(isset($_POST['article']) && isset($_POST['articleName']) && isset($_POST['des
 		&& $_POST['article'] != "" && $_POST['articleName'] != "" && $_POST['description'] != ""){
 			$articleName = htmlentities($_POST['articleName']);	//sanatize all the things
 			$description = htmlentities($_POST['description']);
-			$input = htmlentities($_POST['article']);
+			$input = stripslashes(htmlentities($_POST['article'])); // stripslashes to null magic quote effects
 			$url = "";
 			$imgUrl = "";
 			$len = strlen($input);

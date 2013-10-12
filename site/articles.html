@@ -6,6 +6,9 @@ require_once(SIDEBAR);
 
 ?>
 
+<link href="highlighting/styles/sons-of-obsidian.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="highlighting/src/run_prettify.js"></script>
+
 <div class="blog_entry">
 <div class="content_heading"><h3>Articles</h3></div>
 <ul id="menu">
@@ -44,6 +47,7 @@ $displayCodeScript = "
 <script type=\"text/javascript\">
 	function displayCode(divName){
 		var w =window.open('','','width=900,height=500,resizable,scrollbars');
+		w.document.write('<link href=\"highlighting/styles/sons-of-obsidian.css\" type=\"text/css\" rel=\"stylesheet\" /><body bgcolor=\"black\">');
 		w.document.write(document.getElementById(divName).innerHTML);
 		w.document.close();
 	}
@@ -93,7 +97,14 @@ if(isset($_GET['sub']) && $_GET['sub'] == 1){
 		&& $_POST['article'] != "" && $_POST['articleName'] != "" && $_POST['description'] != ""){
 			$articleName = htmlentities($_POST['articleName']);	//sanatize all the things
 			$description = htmlentities($_POST['description']);
-			$input = htmlentities($_POST['article']);
+
+			/* We first sanitize the articleinput with htmlentities, and then proceed to use stripslashes
+			   We have magic quotes enabled by default, which will cause some information to look funny
+			   To prevent this, we use stripslashes so thing's like: I'm doesn't look like: I\'m
+			   This is especially helpful when people use the [code] tag otherwise we couldn't highlight strings
+			*/
+
+			$input = stripslashes(htmlentities($_POST['article'])); // stripslashes to null magic quote effects
 			$url = "";
 			$imgUrl = "";
 			$len = strlen($input);
@@ -122,8 +133,7 @@ if(isset($_GET['sub']) && $_GET['sub'] == 1){
 							$article .= "<strong>Code:</strong>&nbsp;&nbsp;
 							<a onclick=\"SelectText('code".$codeDivNum."')\" >Select All</a>&nbsp;&nbsp;
 							<a onclick=\"displayCode('code".$codeDivNum."')\">Expand</a><br />
-							<div id=\"code".$codeDivNum."\" class=\"code\" style=\"height:150px; 
-							width:100%; overflow:auto; padding:5px\">";
+							<pre class=\"prettyprint\"><div id=\"code".$codeDivNum."\">";
 							$i += 5;
 							$numOpenTags += 1;
 							$partOfCode = true;
@@ -240,7 +250,7 @@ if(isset($_GET['sub']) && $_GET['sub'] == 1){
 				}else if( $input[$i] == "["){
 					$tag = substr($input, $i+1, 7);
 					if(substr($tag, 0, 5) == "/code"){
-						$article .= "</div>";
+						$article .= "</div></pre>";
 						$i += 6;
 						$numOpenTags -= 1;
 						$partOfCode = false;
