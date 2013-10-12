@@ -1,4 +1,6 @@
 <?php
+session_start();
+$_SESSION['article_info'] = $article;
 require_once('global.include.php');
 require_once(HEADER);
 require_once(NAVBAR);
@@ -130,7 +132,7 @@ if(isset($_GET['sub']) && $_GET['sub'] == 1){
 					$tag = substr($input, $i+1, 7);
 					switch($tag){
 						case substr($tag, 0, 4) == "code":
-							$article .= "<pre class=\"prettyprint\"><strong>Code:</strong>&nbsp;&nbsp;<a onclick=\"SelectText('code".$codeDivNum."')\" >Select All</a>&nbsp;&nbsp;<a onclick=\"displayCode('code".$codeDivNum."')\">Expand</a><br /><div id=\"code".$codeDivNum."\" class=\"code\">";
+							$article .= "<pre class=\"prettyprint\"><strong>Code:&nbsp;<a href=\"/expand.php\" target=\"_blank\">Expand (beta)</a></strong>&nbsp;&nbsp;<a onclick=\"SelectText('code".$codeDivNum."')\" >Select All</a>&nbsp;&nbsp;<a onclick=\"displayCode('code".$codeDivNum."')\">Expand</a><br /><div id=\"code".$codeDivNum."\" class=\"code\">";
 							$i += 5;
 							$numOpenTags += 1;
 							$partOfCode = true;
@@ -260,14 +262,15 @@ if(isset($_GET['sub']) && $_GET['sub'] == 1){
 				}
 			}
 			$article .= "</div></div>";
-
+			$article_less_spaces = str_replace('<br />', '', $article); // Strip <br/> make code output more sleek - Still want <br/> in Expand
+			$_SESSION['article_info'] = $input;
 			if($numOpenTags == 0){
 				echo $displayCodeScript;
 				echo "<div class=\"blog_entry\">".$goBack."<div class=\"content_heading\"><h2>".$articleName."</h2></div><br />";
 				echo "Category: ".$cat."<br />";
 				echo "Submitted: ".date('l jS \of F Y h:i:s A')."<br/>";
 				echo "<h4>Description:</h4><br />".$description."<br /><br />";
-				echo "<h4>Article:</h4><br /></div>".$article;
+				echo "<h4>Article:</h4><br /></div>".$article_less_spaces;
 			}else{
 				echo "All tags must be closed.";
 			}
