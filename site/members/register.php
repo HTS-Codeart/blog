@@ -1,96 +1,100 @@
 <?php
-/* Ensure proper sanitation of fields: stripslashes(mysql_real_escape_string($data));
-   Connect to the database
-   Check the database for existing users with the same information
-   Validate real email address: filter_var($email, FILTER_VALIDATE_EMAIL)
-   Push user information into the database, if no errors occur
-   Echo out data to the login page to be user friendly with a restration success message
-   (If you are feeling fancy, have the script email a verification code)
-   Make sure to close all MySQL Connections to prevent too many sessions error
-CREATE TABLE `a7057662_db`.`login` (
-`id` INT NOT NULL AUTO_INCREMENT ,
-`username` VARCHAR( 25 ) NOT NULL ,
-`passwordhash` VARCHAR( 50 ) NOT NULL ,
-`salt` VARCHAR( 32 ) NOT NULL ,
-`registration_email` VARCHAR( 50 ) NOT NULL ,
-`registration_date` DATETIME NOT NULL ,
-`registration_ip` INT( 20 ) NOT NULL ,
-`hide_email` VARCHAR( 10 ) NOT NULL ,
-`group` INT( 2 ) NULL ,
-`access` INT( 2 ) NULL ,
-`security_question` TEXT NOT NULL ,
-`security_answer` TEXT NOT NULL ,
-`last_login_ip` INT( 20 ) NOT NULL ,
-`verifyhash` VARCHAR( 50 ) NOT NULL ,
-`signature` TEXT NOT NULL ,
-`birthday` DATETIME NOT NULL ,
-`timezone` VARCHAR( 30 ) NOT NULL ,
-PRIMARY KEY ( `id` )
-) ENGINE = MYISAM
 
-We need to add in verification on all things that are $_POST'ed. That way someone doesn't manually enter a bday that looks like <script></script>.
-When doing that, we should check whther the month form is a month, the day is an accurate day, and the year is a possible year. And have a list of timezones to choose from and verify what's posted is one of those in the list.
-username needs regex and a min length of 1. password min length of whatever and potentially regex.
-email needs the email verificatoin
-hide_email must be either 0 or 1
-might want a list for security_question and choose from it
+	/* The big thing here is the validation. Right now, the validation is coded in PHP and echo's out all of the errors at the end.
+		This can really be done a number of ways. You could go down the list and echo back out the first error it comes across
+		and echo that out. Or we could code the entire validation process through JavaScript and have PHP assume that the form
+		is all good to go. IT's really up to you guys. I just did it this way for right now.*/
 
-*/
+		/*Side note: Things like the security answer and question currently have requirements on them. I myself like the idea of
+			taking the security question from a list and checking that way. Then leave a minimum char req on the answer. --will update*/
 
-require_once('../global.include.php'); /* includes db_connect, db_query, and db_escape */
+	if(empty($_POST)) {				//to check if the user submitted a registration. Can also use $_SERVER variables to check like HTTP_REFERER
+		require_once('register.html');
+	} else {
 
-// Generating a random salt value
+	require_once('../global.include.php'); /* includes db_connect, db_query, and db_escape */
+
+		/* in depth form validation needs to happen here */
+
+		$errormsg = "";
+		if((trim($_POST['username']) != "") && (strlen(trim($_POST['username'])) >= 1) && (strlen(trim($_POST['username'])) <= 20) &&
+			(preg_match("/[^-a-z0-9_]/i", trim($_POST['username'])) != 1)) {
+				$username = db_escape(trim($_POST['username']));
+		} else {
+			$errormsg .= "-username must only contain a-Z0-9-_ characters and be less than 20 characters<br>";
+		}
+		if(strlen($_POST['password']) >= 6) {				//may also need to add in regex
+			$password = db_escape($_POST['password']);
+			$salt = unique_md5(); // Store random salt in $salt
+			$passwordhash  = hash('sha256',($password . $salt));
+		} else {
+			$errormsg .= "-password must be more than six characters<br>";
+		}
+		if($_POST['confirm'] != $_POST['password']) {
+			$errormsg .= "-passwords did not match<br>";
+		}
+		if(filter_var($_POST['email'],FILTER_VALIDATE_EMAIL) == true) {
+			$registration_email = db_escape($_POST['email']);
+		} else {
+			$errormsg .= "-email must be a valid email<br>";
+		}
+		$registration_ip = ip2long($_SERVER['REMOTE_ADDR']);
+		$registration_date = date("M d, Y");
+		if((isset($_POST['hide_email'])) && is_numeric($_POST['hide_email']) && (($_POST['hide_email'] == 1) || $_POST['hide_email'] == 0)) {
+			$hide_email = db_escape($_POST['hide_email']);
+		} else {
+			$errormsg .= "-hide email must be yes/no<br>";
+		}
+		$group = 1; 			//or whatever default group is
+		//$access = 0;			//or whatever default access level is
+		if((strlen(trim($_POST['security_question'])) >= 10) && strlen(trim($_POST['security_question'])) <= 200) {
+			$security_question = db_escape(trim($_POST['security_question']));
+		} else {
+			$errormsg .= "-security question must be within 10 and 200 characters<br>";
+		}
+		if((strlen(trim($_POST['security_answer'])) >= 4) && (strlen(trim($_POST['security_answer'])) <= 100)) {
+			$security_answer = db_escape(trim($_POST['security_answer']));
+		} else {
+			$errormsg .+ "-security answer must be within 4 and 100 characters<br>";
+		}
+		if($_POST['signature'] != "") {
+			$signature = db_escape($_POST['signature']);
+		} else {
+			$signature = "NULL";					//Since it's getting pushed into the DB either way
+		}
+		/* To get the birthday we concatenate the three forms: month, day, year */
+		if(($_POST['month'] != "") && ($_POST['day'] != "") && ($_POST['year'] != "") && (checkdate($_POST['month'], $_POST['day'], $_POST['year']))) {
+			$birthday = db_escape($_POST['month'] . ' ' . $_POST['day'] . ' ' . $_POST['year']);
+		} else {
+			$errormsg .= "-birthday must be a correct date<br>";
+		}
+		$possible_timezones = array('-12','-11','-10','-9','-8','-7','-6','-5','-4','-3.5','-3','-2','-1','0','1','2','3','3.5','4','4.5','5','5.5','5.75','6','7','8','9','9.5','10','11','12');
+		if(in_array($_POST['timezone'],$possible_timezones)) {
+			$timezone = $_POST['timezone'];
+		} else {
+			$errormsg .= "-timezone must be an accurate timezone<br>";
+		}
+		$verifyhash = unique_md5();;
+
+		if($errormsg != "") {
+			require_once('register.html');
+		} else {
+			/* Send that shiz to the db*/
+			$sql = "INSERT INTO `users` (username,passwordhash,salt,registration_email,registration_date,registration_ip,hide_email,security_question," .
+				"security_answer,verifyhash,signature,birthday,timezone)" .
+				" VALUES ('$username','$passwordhash','$salt','$registration_email','$registration_date','$registration_ip','$hide_email'," .
+				"'$security_question','$security_answer','$verifyhash','$signature','$birthday','$timezone')";
+			if(db_query($sql)) {
+				/* Refer to post-registration page */
+				echo("<br>Welcome to HTSCodeart $username. The site is still under development.<br>");			//temp
+			} /*else {
+				do_error_report();					//no error reporting at the moment. Should probably implement
+			} */
+		}
+	}
+
+// Generating a random md5 value
 function unique_md5() {
-    mt_srand(microtime(true)*100000 + memory_get_usage(true));
-    return md5(uniqid(mt_rand(), true));
+	mt_srand(microtime(true)*100000 + memory_get_usage(true));
+	return md5(uniqid(mt_rand(), true));
 }
-
-/* in depth form validation needs to happen here */
-
-//$fname = db_escape($_POST['fname']); Probably will not use
-//$lname = db_escape($_POST['lname']); Probably will not use
-$username = db_escape($_POST['username']);
-$password = db_escape($_POST['password']);
-$registration_email = db_escape($_POST['email']);
-$registration_ip = $_SERVER['REMOTE_ADDR'];
-$registration_date = date("M d, Y");	//finish this
-$hide_email = db_escape($_POST['hide_email']);
-$group = 1; 			//or whatever default group is
-$access = 0;			//or whatever default access level is
-$security_question = db_escape($_POST['security_question']);
-$security_answer = db_escape($_POST['security_answer']);
-$signature = db_escape($_POST['signature']);
-
-/* To get the birthday we concatenate the three forms: month, day, year */
-$birth_month = db_escape($_POST['month']);
-$birth_day = db_escape($_POST['day']);
-$birth_year = db_escape($_POST['year']);
-$birthday = "$birth_month $birth_day, $birth_year"; // Should produce something like: September 19, 1984
-
-$timezone = db_escape($_POST['timezone']);
-//$verifyhash = create_verifyhash();
-
-$salt     = unique_md5(); // Store random salt in $salt
-$passwordhash  = hash('sha256',($password . $salt));
-
-
-/* After everything is validated and verified
-	insert everything into the db */
-
-// THIS STILL NEEDS TONS OF VALIDATION WORK!! //
-$error = false;
-
-if(!isset($username) || $username == '') $error = true;
-if(!isset($password) || $password == '') $error = true;
-if(!isset($registration_email) || $registration_email == '') $error = true;
-if(!isset($hide_email) || $hide_email == '') $error = true;
-if(!isset($security_question) || $security_question == '') $error = true;
-if(!isset($security_answer) || $security_answer == '') $error = true;
-
-if(db_query("INSERT INTO `users` (`username`, `passwordhash`, `salt`, `registration_email`, `registration_date`, `registration_ip`, `hide_email`, `group`, `access`, `security_question`, `security_answer`, `signature`, `birthday`, `timezone`) VALUES ('$username', '$passwordhash', '$salt', '$registration_email', '$registration_date', '$registration_ip', '$hide_email', '$group', '$access', '$security_question', '$security_answer', '$signature', '$birthday', '$timezone')") && $error == false) {
-  echo('Success, you have registered your account. <a href="/members/login.html">Login</a>');
-}
-else {
-  echo('Registration was not successful, please <a href="/members/register.html">go back</a> and try again!');
-}
-?>
